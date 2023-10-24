@@ -19,14 +19,13 @@ I use kubernetes for $DAYJOB -- a lot.  It's got some great things going for it.
 
 ## OpenBSD "containers"
 
-As of OpenBSD 7.4, there is no concept of a "container" exactly.  But, if we break down the features of an [OCI container](link needed), we can accomplish something earily similar in OpenBSD:
+As of OpenBSD 7.4, there is no concept of a "container" exactly.  But, if we break down the features of an [OCI container](https://opencontainers.org), we can accomplish something earily similar in OpenBSD:
 
-|| Containerd feature || OpenBSD technology ||
-|--|--|
+| Containerd feature | OpenBSD technology |
+|:-------------------|-------------------:|
 | shared kernel | process isolation |
-| file system isolation | chroot(?) and unveil(?) |
-| network isolation | pair(4), rdomain(8), rtable(8), pf(4) |
-|--|--|
+| file system isolation | [chroot(2)](http://man.openbsd.org/chroot) and [unveil(2)](http://man.openbsd.org/unveil) |
+| network isolation | [pair(4)](http://man.openbsd.org/pair), [rdomain(4)](http://man.openbsd.org/rdomain), [rtable(4)](http://man.openbsd.org/rtable), [pf(4)](http://man.openbsd.org/pf) |
 
 ## Architecture
 
@@ -41,3 +40,7 @@ The main node client, built to register to the k8s server, and handle API reques
 ### pufflet-config
 
 Leveraging some OpenBSD features requires elevated privileges -- in some case root.  To avoid privilege escalation on the local OpenBSD system, strict separation of concerns is followed.  All calls from the pufflet for configuration changes to the local OpenBSD system are relayed through a GRPC socket to a pufflet-config process.
+
+## Supported OpenBSD versions
+
+Proudly built and tested against OpenBSD 7.4
