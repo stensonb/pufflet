@@ -1,0 +1,8 @@
+{
+    "virtual-kubelet": {
+        "cpu": "50",
+        "memory": "32Gi",
+        "pods": "20",
+        "providerID": "mock"
+    }
+}
