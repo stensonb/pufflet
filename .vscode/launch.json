@@ -1,0 +1,26 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch pufflet",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/cmd/pufflet",
+            "args": [
+                "--provider",
+                "mock",
+                "--provider-config",
+                "${workspaceFolder}/cmd/pufflet/internal/provider/mock/mock.config.json"
+            ],
+            "env": {
+                "APISERVER_CERT_LOCATION": "/Users/bryanstenson/git/fileserver/data/uploads/apiserver.crt",
+                "APISERVER_KEY_LOCATION": "/Users/bryanstenson/git/fileserver/data/uploads/apiserver.key",
+                "APISERVER_CA_CERT_LOCATION": "/Users/bryanstenson/git/fileserver/data/uploads/ca.crt",
+            },
+        }
+    ]
+}
