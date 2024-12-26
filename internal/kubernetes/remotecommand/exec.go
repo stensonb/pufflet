@@ -53,6 +53,8 @@ func ServeExec(w http.ResponseWriter, req *http.Request, executor Executor, podN
 	if err != nil {
 		if exitErr, ok := err.(utilexec.ExitError); ok && exitErr.Exited() {
 			rc := exitErr.ExitStatus()
+			// TODO: this is imported code from virtual-kubelet/mock provider
+			//nolint:errcheck
 			ctx.writeStatus(&apierrors.StatusError{ErrStatus: metav1.Status{
 				Status: metav1.StatusFailure,
 				Reason: remotecommandconsts.NonZeroExitCodeReason,
@@ -69,9 +71,13 @@ func ServeExec(w http.ResponseWriter, req *http.Request, executor Executor, podN
 		} else {
 			err = fmt.Errorf("error executing command in container: %v", err)
 			runtime.HandleError(err)
+			// TODO: this is imported code from virtual-kubelet/mock provider
+			//nolint:errcheck
 			ctx.writeStatus(apierrors.NewInternalError(err))
 		}
 	} else {
+		// TODO: this is imported code from virtual-kubelet/mock provider
+		//nolint:errcheck
 		ctx.writeStatus(&apierrors.StatusError{ErrStatus: metav1.Status{
 			Status: metav1.StatusSuccess,
 		}})
