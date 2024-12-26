@@ -1,5 +1,7 @@
 # pufflet
 
+[![golangci-lint](https://github.com/stensonb/pufflet/actions/workflows/golangci-lint.yml/badge.svg)](https://github.com/stensonb/pufflet/actions/workflows/golangci-lint.yml)
+
 A sample project playing with the idea of running [virtual-kubelet](https://virtual-kubelet.io) to drive processes on [OpenBSD](https://openbsd.org).
 
 `pufflet` is a [Kubernetes](https://kubernetes.io) node client, run on an OpenBSD machine.  On startup, `pufflet` registers itself with a k8s API, and advertises itself as an available node to perform work (using a `pufflet` [runtimeClass](https://kubernetes.io/docs/concepts/containers/runtime-class/)).  On assignment of work, `pufflet` configures the local OpenBSD machine to execute the pod and "container" within.

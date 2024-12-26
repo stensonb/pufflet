@@ -21,9 +21,9 @@ import (
 	"net/http"
 	"time"
 
+	"k8s.io/apimachinery/pkg/util/httpstream/wsstream"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apiserver/pkg/server/httplog"
-	"k8s.io/apiserver/pkg/util/wsstream"
 )
 
 const (
@@ -105,10 +105,16 @@ func createWebSocketStreams(req *http.Request, w http.ResponseWriter, opts *Opti
 	// TODO: make generic to SPDY and WebSockets and do it outside of this method?
 	switch {
 	case opts.Stdout:
+		// TODO: this is imported code from virtual-kubelet/mock provider
+		//nolint:errcheck
 		streams[stdoutChannel].Write([]byte{})
 	case opts.Stderr:
+		// TODO: this is imported code from virtual-kubelet/mock provider
+		//nolint:errcheck
 		streams[stderrChannel].Write([]byte{})
 	default:
+		// TODO: this is imported code from virtual-kubelet/mock provider
+		//nolint:errcheck
 		streams[errorChannel].Write([]byte{})
 	}
 

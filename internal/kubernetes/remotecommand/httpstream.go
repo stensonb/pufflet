@@ -29,9 +29,9 @@ import (
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/util/httpstream"
 	"k8s.io/apimachinery/pkg/util/httpstream/spdy"
+	"k8s.io/apimachinery/pkg/util/httpstream/wsstream"
 	remotecommandconsts "k8s.io/apimachinery/pkg/util/remotecommand"
 	"k8s.io/apimachinery/pkg/util/runtime"
-	"k8s.io/apiserver/pkg/util/wsstream"
 	"k8s.io/client-go/tools/remotecommand"
 
 	"k8s.io/klog/v2"
@@ -428,6 +428,8 @@ WaitForStreams:
 				// This defer statement shouldn't be here, but due to previous refactoring, it ended up in
 				// here. This is what 1.0.x kubelets do, so we're retaining that behavior. This is fixed in
 				// the v2ProtocolHandler.
+				// TODO: this is imported code from virtual-kubelet/mock provider
+				//nolint:errcheck
 				defer stream.Reset()
 
 				go waitStreamReply(stream.replySent, replyChan, stop)

@@ -31,9 +31,9 @@ import (
 
 	api "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/types"
+	"k8s.io/apimachinery/pkg/util/httpstream/wsstream"
 	"k8s.io/apimachinery/pkg/util/runtime"
 	"k8s.io/apiserver/pkg/endpoints/responsewriter"
-	"k8s.io/apiserver/pkg/util/wsstream"
 )
 
 const (
@@ -132,8 +132,12 @@ func handleWebSocketStreams(req *http.Request, w http.ResponseWriter, portForwar
 		portBytes := make([]byte, 2)
 		// port is always positive so conversion is allowable
 		binary.LittleEndian.PutUint16(portBytes, uint16(streamPair.port))
-		streamPair.dataStream.Write(portBytes)
-		streamPair.errorStream.Write(portBytes)
+		if _, err := streamPair.dataStream.Write(portBytes); err != nil {
+			return fmt.Errorf("failed to write dataStream: %w", err)
+		}
+		if _, err := streamPair.errorStream.Write(portBytes); err != nil {
+			return fmt.Errorf("failed to write errorStream: %w", err)
+		}
 	}
 	h := &websocketStreamHandler{
 		conn:        conn,

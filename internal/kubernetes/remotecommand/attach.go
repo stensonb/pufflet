@@ -53,6 +53,8 @@ func ServeAttach(w http.ResponseWriter, req *http.Request, attacher Attacher, po
 	if err != nil {
 		if exitErr, ok := err.(utilexec.ExitError); ok && exitErr.Exited() {
 			rc := exitErr.ExitStatus()
+			// TODO: this is imported code from virtual-kubelet/mock provider
+			//nolint:errcheck
 			ctx.writeStatus(&apierrors.StatusError{ErrStatus: metav1.Status{
 				Status: metav1.StatusFailure,
 				Reason: remotecommandconsts.NonZeroExitCodeReason,
@@ -70,9 +72,13 @@ func ServeAttach(w http.ResponseWriter, req *http.Request, attacher Attacher, po
 		}
 		err = fmt.Errorf("error attaching to container: %v", err)
 		runtime.HandleError(err)
+		// TODO: this is imported code from virtual-kubelet/mock provider
+		//nolint:errcheck
 		ctx.writeStatus(apierrors.NewInternalError(err))
 		return
 	}
+	// TODO: this is imported code from virtual-kubelet/mock provider
+	//nolint:errcheck
 	ctx.writeStatus(&apierrors.StatusError{ErrStatus: metav1.Status{
 		Status: metav1.StatusSuccess,
 	}})
